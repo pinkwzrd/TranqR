@@ -1,0 +1,4 @@
+DEFAULT_POS = (0,0)
+DEFAULT_SIZE = (100,100)
+
+DEFAULT_MODE = "resize"
