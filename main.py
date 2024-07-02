@@ -2,7 +2,7 @@
 transcription tool using Whisper
 
 Start: 2024/04
-Latest Update: 2024/06/26
+Latest Update: 2024/07/02
 by pinki<3
 '''
 
@@ -70,7 +70,7 @@ def copy_func(parameters): # whisper_handler
 
 
 def start_whisper(parameters):
-    '''Initiates a thread to run Whisperprepare running Whisper'''
+    '''Initiates a thread to prepare running Whisper'''
     if not parameters.running:
         parameters.running = True
         parameters.progress_bar.progress = 0
@@ -114,7 +114,7 @@ def load_file(parameters):
         parameters.pass_info()
 
 def file_from_path(path):
-    '''Splits a path'''
+    '''Extracts the filename from path'''
     file = path.split("/")[-1]
     return file
 
@@ -168,6 +168,7 @@ class WhisperHandler:
         self.infobox = None
 
         self.start_button = None
+        self.start_button_tooltip = None
 
     def timestamps_on(self):
         '''Creates the text output from the raw text. With timestamps'''
@@ -193,7 +194,6 @@ class WhisperHandler:
         max_width = self.source_textbox_link.size[0] - self.source_textbox_link.spacing * 2 - 130
 
         mode = 1
-        text = ""
 
         if mode == 1: # "Dateianfa..."
             if text_width > max_width:
@@ -272,8 +272,11 @@ class WhisperHandler:
         '''Initiates the trnscription process.'''
         self.textbox.pos = (510,0)
         self.running = True
+
         self.textbox.text = "Loading..."
         self.start_button.text = "Running..."
+        self.start_button_tooltip.text = "Already running"
+
         self.text_output_raw = []
         print(f"Running Whisper-Model({self.model.value[0]}-{self.model.value[1]}, {self.model_size.value})")
 
@@ -307,7 +310,9 @@ class WhisperHandler:
         self.progress_bar.progress = int(self.progress)
         self.pass_info()
         self.running = False
+
         self.start_button.text = "Start Transcription"
+        self.start_button_tooltip.text = "Start the transcription process"
 
 def main():
     '''Main function. Everything happens here ;D'''
@@ -342,7 +347,7 @@ def main():
     # Key instances
 
     whisper_handler = WhisperHandler()
-    tooltip_manager = ui.TooltipManager(screen,trigger_time=0.6)
+    tooltip_manager = ui.TooltipManager(screen,trigger_time=0.55)
 
     # Constants
 
@@ -590,17 +595,17 @@ def main():
     tooltip_model_large = ui.TooltipArray()
     tooltip_model_large.pos = model_large.pos
     tooltip_model_large.size = model_large.size
-    tooltip_model_large.text = "Highest precision, Worst Performance"
+    tooltip_model_large.text = "Highest precision, worst performance"
 
     tooltip_model_medium = ui.TooltipArray()
     tooltip_model_medium.pos = model_medium.pos
     tooltip_model_medium.size = model_medium.size
-    tooltip_model_medium.text = "Medium precision, Medium Performance"
+    tooltip_model_medium.text = "Medium precision, medium performance"
 
     tooltip_model_small = ui.TooltipArray()
     tooltip_model_small.pos = model_small.pos
     tooltip_model_small.size = model_small.size
-    tooltip_model_small.text = "Lowest precision, Best Performance"
+    tooltip_model_small.text = "Lowest precision, best performance"
 
     tooltip_manager.add_tooltip([tooltip_model_large,tooltip_model_medium,tooltip_model_small])
 
@@ -619,6 +624,7 @@ def main():
     tooltip_start.pos = start_button.pos
     tooltip_start.size = start_button.size
     tooltip_start.text = "Start the transcription process"
+    whisper_handler.start_button_tooltip = tooltip_start
 
     tooltip_search = ui.TooltipArray()
     tooltip_search.pos = search_load_file.pos
