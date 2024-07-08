@@ -51,12 +51,15 @@ class Checkbox(UIElement):
         return f"Checkbox({self.name})"
     
     def lock(self):
+        '''Locks the Checkbox'''
         self.locked = True
     
     def unlock(self):
+        '''Unlocks the Checkbox'''
         self.locked = False
     
     def check(self):
+        '''Checks the Checkbox'''
         self.checked = True
         if self.func_on:
             if self.parameters_on:
@@ -65,6 +68,7 @@ class Checkbox(UIElement):
                 self.func_on()
     
     def uncheck(self):
+        '''Unchecks the Checkbox'''
         self.checked = False
         if self.func_off:
             if self.parameters_off:
@@ -74,10 +78,10 @@ class Checkbox(UIElement):
 
     def handle_event(self, event):
         '''
-        This function gets called by the EventListener to handle click on/off.
+        This function gets called by the EventListener to handle click on/off (toggle).
         
         Parameters:
-        event (): The event.
+        event: The event.
         '''
         if self.target.mouse_left.state == "clicked":
             if self.collision(pygame.mouse.get_pos()):

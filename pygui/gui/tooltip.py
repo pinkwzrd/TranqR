@@ -59,11 +59,8 @@ class TooltipManager:
             now_time = time.time()
             if now_pos == self.start_pos:
                 if now_time-self.start_time >= self.trigger_time and not(self.text):
-                    #self.text = "TOOLTIP :3"
                     for element in self.tooltip_list:
-                        #print(now_pos,element.pos,element.size)
                         if (now_pos[0] >= element.pos[0] and now_pos[0] <= (element.pos[0]+element.size[0])) and (now_pos[1] >= element.pos[1] and now_pos[1] <= (element.pos[1]+element.size[1])):
-                            print("TOOLTIP :3")
                             self.text = element.text
                     
                             self.tooltip_box.text = self.text
