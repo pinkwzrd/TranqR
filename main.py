@@ -269,7 +269,7 @@ class WhisperHandler:
 
 
     def run_whisper(self):
-        '''Initiates the trnscription process.'''
+        '''Initiates the transcription process.'''
         self.textbox.pos = (510,0)
         self.running = True
 
@@ -410,6 +410,7 @@ def main():
     gpu_fp16.texture_unchecked = "images/checkbox_unchecked.png"
     gpu_fp16.texture_checked = "images/checkbox_checked.png"
     gpu_fp16.texture_unchecked_locked = "images/checkbox_unchecked_locked.png"
+    gpu_fp16.texture_checked_locked = "images/checkbox_checked.png"
     gpu_fp16.size = (30,30)
     gpu_fp16.pos = (settings_pos[0]+5,settings_pos[1]+5)
     gpu_fp16.func_on = whisper_handler.model.select
@@ -420,6 +421,7 @@ def main():
     gpu_int8.texture_unchecked = "images/checkbox_unchecked.png"
     gpu_int8.texture_checked = "images/checkbox_checked.png"
     gpu_int8.texture_unchecked_locked = "images/checkbox_unchecked_locked.png"
+    gpu_int8.texture_checked_locked = "images/checkbox_checked.png"
     gpu_int8.size = (30,30)
     gpu_int8.pos = (settings_pos[0]+5,settings_pos[1]+5+40)
     gpu_int8.func_on = whisper_handler.model.select
@@ -429,6 +431,7 @@ def main():
     cpu_int8 = ui.Checkbox(screen,name="Model CPU INT8",text="CPU INT8")
     cpu_int8.texture_unchecked = "images/checkbox_unchecked.png"
     cpu_int8.texture_checked = "images/checkbox_checked.png"
+    cpu_int8.texture_checked_locked = "images/checkbox_checked.png"
     cpu_int8.size = (30,30)
     cpu_int8.pos = (settings_pos[0]+5,settings_pos[1]+5+40*2)
     cpu_int8.func_on = whisper_handler.model.select
@@ -442,6 +445,7 @@ def main():
     model_large = ui.Checkbox(screen,name="Model-Size: Large",text="Large Model")
     model_large.texture_unchecked = "images/checkbox_unchecked.png"
     model_large.texture_checked = "images/checkbox_checked.png"
+    model_large.texture_checked_locked = "images/checkbox_checked.png"
     model_large.size = (30,30)
     model_large.pos = (settings_pos[0]+310,settings_pos[1]+5)
     model_large.func_on = whisper_handler.model_size.select
@@ -451,6 +455,7 @@ def main():
     model_medium = ui.Checkbox(screen,name="Model-Size: Medium",text="Medium Model")
     model_medium.texture_unchecked = "images/checkbox_unchecked.png"
     model_medium.texture_checked = "images/checkbox_checked.png"
+    model_medium.texture_checked_locked = "images/checkbox_checked.png"
     model_medium.size = (30,30)
     model_medium.pos = (settings_pos[0]+310,settings_pos[1]+5+40)
     model_medium.func_on = whisper_handler.model_size.select
@@ -460,6 +465,7 @@ def main():
     model_small = ui.Checkbox(screen,name="Model-Size: Small",text="Small Model")
     model_small.texture_unchecked = "images/checkbox_unchecked.png"
     model_small.texture_checked = "images/checkbox_checked.png"
+    model_small.texture_checked_locked = "images/checkbox_checked.png"
     model_small.size = (30,30)
     model_small.pos = (settings_pos[0]+310,settings_pos[1]+5+40*2)
     model_small.func_on = whisper_handler.model_size.select
