@@ -10,6 +10,7 @@ import threading
 from tkinter import filedialog
 import logging
 import os
+import time
 
 import pygame
 from moviepy.editor import VideoFileClip, AudioFileClip
@@ -163,6 +164,9 @@ class WhisperHandler:
         self.progress = None
         self.progress_bar = None
 
+        self.time_passed = 0
+        self.time_beam = []
+
         # EventHandler
         self.textbox = None # textbox_output
         self.infobox = None
@@ -239,7 +243,7 @@ class WhisperHandler:
             text += f"( {self.language.upper()}: {int(self.language_percentage*100)}% )  -  "
         if self.progress or self.duration:
             if self.progress == self.duration:
-                text = "( Finished )"
+                text = f"( Finished in {int(self.time_passed)} seconds)"
             else:
                 text += "( "
                 if self.progress:
@@ -270,6 +274,9 @@ class WhisperHandler:
 
     def run_whisper(self):
         '''Initiates the transcription process.'''
+        self.time_beam = []
+        start_time = time.time()
+
         self.textbox.pos = (510,0)
         self.running = True
 
@@ -295,6 +302,10 @@ class WhisperHandler:
             line = (segment.start, segment.end, segment.text)
             self.text_output_raw += [line]
             self.text_output = ""
+            
+            mid_time = time.time()
+            time_passed_mid = mid_time - start_time
+            self.time_beam.append((print_time(line[1]),time_passed_mid))
             if self.timestamps:
                 for l in self.text_output_raw:
                     self.text_output += f"[{print_time(l[0])} - {print_time(l[1])}] {l[2]}\n"
@@ -306,6 +317,10 @@ class WhisperHandler:
             self.progress_bar.progress = int(self.progress)
             self.pass_info()
             self.pass_output()
+
+        end_time = time.time()
+        self.time_passed = end_time - start_time
+
         self.progress = self.duration
         self.progress_bar.progress = int(self.progress)
         self.pass_info()
@@ -313,6 +328,10 @@ class WhisperHandler:
 
         self.start_button.text = "Start Transcription"
         self.start_button_tooltip.text = "Start the transcription process"
+
+        with open("LOG_TIME.txt","w") as file:
+            for line in self.time_beam:
+                file.write(f"{line[0]} | {line[1]}\n")
 
 def main():
     '''Main function. Everything happens here ;D'''
