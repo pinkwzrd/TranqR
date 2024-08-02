@@ -15,8 +15,8 @@ import time
 import pygame
 from moviepy.editor import VideoFileClip, AudioFileClip
 import torch.cuda
-from faster_whisper import WhisperModel
 import pyperclip
+from faster_whisper import WhisperModel
 
 import pygui as ui
 
@@ -469,7 +469,8 @@ def main():
     model_large.pos = (settings_pos[0]+310,settings_pos[1]+5)
     model_large.func_on = whisper_handler.model_size.select
     model_large.parameters_on = model_large
-    whisper_handler.model_size.add_member(model_large,"large-v3")
+    #whisper_handler.model_size.add_member(model_large,"large-v3")
+    whisper_handler.model_size.add_member(model_large,"distil-large-v3")
 
     model_medium = ui.Checkbox(screen,name="Model-Size: Medium",text="Medium Model")
     model_medium.texture_unchecked = "images/checkbox_unchecked.png"
