@@ -1,0 +1,5 @@
+large-v3, Large Model, Highest precision; worst performance
+medium, Medium Model, Medium precision; medium performance
+small, Small Model, Lowest precision; best performance
+
+distil-large-v3, Large Model (en), English only!
