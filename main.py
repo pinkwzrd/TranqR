@@ -458,39 +458,48 @@ def main():
     whisper_handler.model.add_member(cpu_int8,("cpu","int8"))
 
 
+    model_names = []
+    with open("models/models.txt","r") as file:
+        for line in file:
+            name = line
+            name = name.split(", ")
+            if len(name)>2:
+                if "\n" in name[2]:
+                    name[2] = name[2][:-1]
+            model_names.append(name)
 
     whisper_handler.model_size = ui.RadioButton(name="Model-Size")
 
-    model_large = ui.Checkbox(screen,name="Model-Size: Large",text="Large Model")
-    model_large.texture_unchecked = "images/checkbox_unchecked.png"
-    model_large.texture_checked = "images/checkbox_checked.png"
-    model_large.texture_checked_locked = "images/checkbox_checked.png"
-    model_large.size = (30,30)
-    model_large.pos = (settings_pos[0]+310,settings_pos[1]+5)
-    model_large.func_on = whisper_handler.model_size.select
-    model_large.parameters_on = model_large
-    #whisper_handler.model_size.add_member(model_large,"large-v3")
-    whisper_handler.model_size.add_member(model_large,"distil-large-v3")
+    model_one = ui.Checkbox(screen,name="Model-Size One",text=model_names[0][1])
+    model_one.texture_unchecked = "images/checkbox_unchecked.png"
+    model_one.texture_checked = "images/checkbox_checked.png"
+    model_one.texture_checked_locked = "images/checkbox_checked.png"
+    model_one.size = (30,30)
+    model_one.pos = (settings_pos[0]+310,settings_pos[1]+5)
+    model_one.func_on = whisper_handler.model_size.select
+    model_one.parameters_on = model_one
+    whisper_handler.model_size.add_member(model_one,model_names[0][0])
+    #whisper_handler.model_size.add_member(model_one,"distil-large-v3")
 
-    model_medium = ui.Checkbox(screen,name="Model-Size: Medium",text="Medium Model")
-    model_medium.texture_unchecked = "images/checkbox_unchecked.png"
-    model_medium.texture_checked = "images/checkbox_checked.png"
-    model_medium.texture_checked_locked = "images/checkbox_checked.png"
-    model_medium.size = (30,30)
-    model_medium.pos = (settings_pos[0]+310,settings_pos[1]+5+40)
-    model_medium.func_on = whisper_handler.model_size.select
-    model_medium.parameters_on = model_medium
-    whisper_handler.model_size.add_member(model_medium,"medium")
+    model_two = ui.Checkbox(screen,name="Model-Size Two",text=model_names[1][1])
+    model_two.texture_unchecked = "images/checkbox_unchecked.png"
+    model_two.texture_checked = "images/checkbox_checked.png"
+    model_two.texture_checked_locked = "images/checkbox_checked.png"
+    model_two.size = (30,30)
+    model_two.pos = (settings_pos[0]+310,settings_pos[1]+5+40)
+    model_two.func_on = whisper_handler.model_size.select
+    model_two.parameters_on = model_two
+    whisper_handler.model_size.add_member(model_two,model_names[1][0])
 
-    model_small = ui.Checkbox(screen,name="Model-Size: Small",text="Small Model")
-    model_small.texture_unchecked = "images/checkbox_unchecked.png"
-    model_small.texture_checked = "images/checkbox_checked.png"
-    model_small.texture_checked_locked = "images/checkbox_checked.png"
-    model_small.size = (30,30)
-    model_small.pos = (settings_pos[0]+310,settings_pos[1]+5+40*2)
-    model_small.func_on = whisper_handler.model_size.select
-    model_small.parameters_on = model_small
-    whisper_handler.model_size.add_member(model_small,"small")
+    model_three = ui.Checkbox(screen,name="Model-Size Three",text=model_names[2][1])
+    model_three.texture_unchecked = "images/checkbox_unchecked.png"
+    model_three.texture_checked = "images/checkbox_checked.png"
+    model_three.texture_checked_locked = "images/checkbox_checked.png"
+    model_three.size = (30,30)
+    model_three.pos = (settings_pos[0]+310,settings_pos[1]+5+40*2)
+    model_three.func_on = whisper_handler.model_size.select
+    model_three.parameters_on = model_three
+    whisper_handler.model_size.add_member(model_three,model_names[2][0])
 
 
     timestamp_setting = ui.Checkbox(screen,name="Timestamp Setting",text="Show Timestamps")
@@ -581,7 +590,7 @@ def main():
     gpu_int8.locked = not cuda_available
     cpu_int8.check()
 
-    model_small.check()
+    model_three.check()
 
     timestamp_setting.check()
 
@@ -618,22 +627,22 @@ def main():
     tooltip_manager.add_tooltip([tooltip_timestamps])
 
 
-    tooltip_model_large = ui.TooltipArray()
-    tooltip_model_large.pos = model_large.pos
-    tooltip_model_large.size = model_large.size
-    tooltip_model_large.text = "Highest precision, worst performance"
+    tooltip_model_one = ui.TooltipArray()
+    tooltip_model_one.pos = model_one.pos
+    tooltip_model_one.size = model_one.size
+    tooltip_model_one.text = model_names[0][2]
 
-    tooltip_model_medium = ui.TooltipArray()
-    tooltip_model_medium.pos = model_medium.pos
-    tooltip_model_medium.size = model_medium.size
-    tooltip_model_medium.text = "Medium precision, medium performance"
+    tooltip_model_two = ui.TooltipArray()
+    tooltip_model_two.pos = model_two.pos
+    tooltip_model_two.size = model_two.size
+    tooltip_model_two.text = model_names[1][2]
 
-    tooltip_model_small = ui.TooltipArray()
-    tooltip_model_small.pos = model_small.pos
-    tooltip_model_small.size = model_small.size
-    tooltip_model_small.text = "Lowest precision, best performance"
+    tooltip_model_three = ui.TooltipArray()
+    tooltip_model_three.pos = model_three.pos
+    tooltip_model_three.size = model_three.size
+    tooltip_model_three.text = model_names[2][2]
 
-    tooltip_manager.add_tooltip([tooltip_model_large,tooltip_model_medium,tooltip_model_small])
+    tooltip_manager.add_tooltip([tooltip_model_one,tooltip_model_two,tooltip_model_three])
 
 
     tooltip_save = ui.TooltipArray()
@@ -702,11 +711,8 @@ def main():
 
         # VISUAL
         screen.fill(white)
-        ui_manager.tick()
-        ui_manager.drawall()
-
-
-        # RESET
+        ui_manager.tick() # Alle UI-Elemente werden geupdated
+        ui_manager.drawall() # Alle UI-Elemente werden dargestellt
 
         # Refresh Window
         pygame.display.flip()
