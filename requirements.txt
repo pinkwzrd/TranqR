@@ -1,0 +1,5 @@
+pygame==2.5.2
+moviepy==1.0.3
+torch==2.3.1
+pyperclip==1.8.2
+faster-whisper==1.0.2
