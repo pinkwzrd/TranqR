@@ -1,5 +1,14 @@
 '''
-transcription tool using Whisper
+Transcription tool using Whisper
+
+
+Copyright (c) 2024 pinkwizard / Jakob Schmidt
+
+This file is part of TranqR.
+
+TranqR is licensed under the MIT License.
+See the LICENSE file in the root of the repository for more details.
+
 
 Start: 2024/04
 Latest Update: 2024/07/02
